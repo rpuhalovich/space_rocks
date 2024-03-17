@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.28.3)
 project(SpaceRocks C CXX)
 set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -43,7 +44,7 @@ set_target_properties(${lib} uninstall PROPERTIES FOLDER "Libraries")
 
 # --- exe ---
 add_executable(${PROJECT_NAME} ${src})
-# set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC ${tgt_inc})
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     SHADER_DIR="${SHADER_DIR}"
