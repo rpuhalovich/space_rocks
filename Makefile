@@ -3,8 +3,11 @@ build:
 	cmake --build build
 	cp build/compile_commands.json compile_commands.json
 
-xcode:
-	cmake -B build -S . -GXcode
+format:
+	find src -iname "*.h" -o -iname "*.c" | xargs clang-format -i --style=file --verbose
 
 clean:
 	rm -rf build compile_commands.json
+
+.PHONY: build clean
+.SILENT:
