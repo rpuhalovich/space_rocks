@@ -111,6 +111,5 @@ int main(void) {
     }
     CloseWindow();
     cleanup();
-    fscanf(stdin, "c");
     return 0;
 }
