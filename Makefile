@@ -6,8 +6,11 @@ build:
 format:
 	find src -iname "*.h" -o -iname "*.c" | xargs clang-format -i --style=file --verbose
 
+xcode:
+	cmake -S . -B xcode -GXcode -D CMAKE_C_COMPILER="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc"
+
 clean:
 	rm -rf build compile_commands.json
 
-.PHONY: build clean
+.PHONY: build xcode format clean
 .SILENT:

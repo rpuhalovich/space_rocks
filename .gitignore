@@ -1,4 +1,5 @@
 build/
+xcode/
 cmake-debug-build/
 .idea/
 .vscode/

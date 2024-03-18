@@ -2,10 +2,19 @@ cmake_minimum_required(VERSION 3.28.3)
 project(SpaceRocks C)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_C_STANDARD 17)
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER Predefined)
+
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -O0 -g")
+
+IF(APPLE)
+    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+    set(CMAKE_HAVE_THREADS_LIBRARY 1)
+    set(CMAKE_USE_WIN32_THREADS_INIT 0)
+    set(CMAKE_USE_PTHREADS_INIT 1)
+    set(THREADS_PREFER_PTHREAD_FLAG ON)
+ENDIF()
 
 # --- src ---
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
@@ -19,26 +28,24 @@ set(FETCHCONTENT_QUIET FALSE)
 
 # raylib
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
+set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     raylib
     GIT_REPOSITORY "https://github.com/raysan5/raylib.git"
     GIT_TAG "ae50bfa"
     GIT_PROGRESS TRUE
+    GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(raylib)
 set(lib ${lib} raylib)
 
-include_directories(${inc})
 set_target_properties(${lib} uninstall PROPERTIES FOLDER "Libraries")
 
 # --- exe ---
 add_executable(${PROJECT_NAME} ${src})
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 target_compile_definitions(${PROJECT_NAME} PUBLIC
-    SHADER_DIR="${SHADER_DIR}"
-    RES_DIR="${RES_DIR}"
+    RES_DIR="${CMAKE_SOURCE_DIR}/res/"
     PROJECT_ROOT_DIR="${CMAKE_SOURCE_DIR}"
-    MACOSX_DEPLOYMENT_TARGET=10.9
 )
 target_link_libraries(${PROJECT_NAME} ${lib} "-framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL")
