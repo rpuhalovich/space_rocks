@@ -9,5 +9,5 @@ format:
 clean:
 	rm -rf build compile_commands.json
 
-.PHONY: build xcode format clean
+.PHONY: build format clean
 .SILENT:

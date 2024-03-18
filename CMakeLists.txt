@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER Predefined)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -O0 -g")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 
 # --- src ---
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
